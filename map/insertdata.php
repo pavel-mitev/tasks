@@ -54,6 +54,6 @@
 	echo $records_not_inserted . " records were not inserted because they already exist in the database! <br>";
 
 	mysqli_close($connect);
-
+//
 	exit(0);
 	?>
