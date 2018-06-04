@@ -19,12 +19,22 @@
 
 	foreach ($data->list as $row) {
 
-		$query = "INSERT INTO coords(Lat,Lng,name) VALUES(" . $row->coord->Lat . "," . $row->coord->Lon . ",'" . $row->name ."');";
-
-		if(!mysqli_query($connect,$query))
+		$check_if_exist = "SELECT * FROM coords WHERE Lat=".$row->coord->Lat." AND Lng=".$row->coord->Lon;
+		$result=mysqli_query($connect,$check_if_exist);
+		if($result->num_rows == 0)
 		{
-			echo "Error executing: " . $query . "<br>";
-		} 
+		
+			$query = "INSERT INTO coords(Lat,Lng,name) VALUES(" . $row->coord->Lat . "," . $row->coord->Lon . ",'" . $row->name ."');";
+
+			if(!mysqli_query($connect,$query))
+			{
+				echo "Error executing: " . $query . "<br>";
+			} 
+		}
+		else
+		{
+			echo "Already exists<br>";
+		}
 	}
 
 	mysqli_close($connect);
