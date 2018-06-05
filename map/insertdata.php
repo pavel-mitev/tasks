@@ -30,13 +30,14 @@
 			$snow = "NULL";
 			if(!empty($row->rain))
 			{
-
-				$rain = $row->rain->{'3h'};
+				if($row->rain->{'3h'} != NULL)
+					$rain = $row->rain->{'3h'};
 			}
 
 			if(!empty($row->snow))
 			{
-				$snow = $row->snow->{'3h'};
+				if($row->snow->{'3h'} != NULL)
+					$snow = $row->snow->{'3h'};
 			}
 			$query = "INSERT INTO weather VALUES(" . $row->id . "," . $row->dt . "," . $row->coord->Lat . "," . $row->coord->Lon . ",'" . $row->name . "'," . $row->main->temp_max . "," . $row->main->temp_min . "," . $row->main->temp . "," . $row->main->pressure . "," . $row->wind->speed . "," . $row->wind->deg . "," . $rain . "," . $snow .",'" . $row->weather[0]->main . "','" . $row->weather[0]->description . "'," . $row->main->humidity . "," . $row->clouds->today . ")";
 
