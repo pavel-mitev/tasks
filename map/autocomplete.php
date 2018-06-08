@@ -1,28 +1,30 @@
+
+
 <?php
-  $test;
-  if(isset($_POST["min_temp"]))
+$test;
+  if("" != trim($_POST["min_temp"]))
   {
     $test .= " WHERE currTemp >= " . $_POST["min_temp"];
-    if(isset($_POST["max_temp"]))
+    if("" != trim($_POST["max_temp"]))
     {
       $test .= " AND currTemp <= " . $_POST["max_temp"];
     }
 
-      if(isset($_POST["city"]))
+      if("" != trim($_POST["city"]))
       {
         $test .= " AND cityName LIKE '%" . $_POST["city"] . "%'";
       }
   }
-  else if(isset($_POST["max_temp"]))
+  else if("" != trim($_POST["max_temp"]))
   {
     $test .= " WHERE currTemp <= " . $_POST["max_temp"];
 
-    if(isset($_POST["city"]))
+    if("" != trim($_POST["city"]))
     {
       $test .= " AND cityName LIKE '%" . $_POST["city"] . "%'";
     }
   }
-  else if(isset($_POST["city"]))
+  else if("" != trim($_POST["city"]))
   {
     $test .= " WHERE cityName LIKE '%" . $_POST["city"] . "%'";
   }
@@ -121,18 +123,15 @@
   	</style>
   </head>
   <body>
-    <form action="autocomplete.php" method="post">
-      Minimal temperature: <input type="text" name="min_temp" placeholder="Ex: 25" size="2">
-      Maximal temperature: <input type="text" name="max_temp" placeholder="Ex: 25" size="2"><br>
-      <input type="submit" value="Refresh">
-    </form>
-
     <form autocomplete="off" action="autocomplete.php" method="post">
-        <div class="autocomplete">
-        <input id="cityInput" type="text" name="city" placeholder="City">
-        </div>
-        <input type="submit" value = "Submit">
+      Minimal temperature: <input type="text" name="min_temp" placeholder="Ex: 25" >
+      Maximal temperature: <input type="text" name="max_temp" placeholder="Ex: 25" >
+      <div class="autocomplete">
+      City: <input id="cityInput" type="text" name="city" placeholder="City">
+      </div>
+      <input type="submit" value = "Submit">
     </form>
+  </script>
     <script>
     function autoComplete(input,array)
     {
