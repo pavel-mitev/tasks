@@ -1,7 +1,12 @@
 
+<?php /* Template Name: Searchbox*/ ?>
+
+
+<?php get_header(); ?>
+
 
 <?php
-$test;
+  $test;
   if("" != trim($_POST["min_temp"]))
   {
     $test .= " WHERE currTemp >= " . $_POST["min_temp"];
@@ -14,6 +19,11 @@ $test;
       {
         $test .= " AND cityName LIKE '%" . $_POST["city"] . "%'";
       }
+
+      if("" != trim($_POST["datetime"]))
+      {
+        $test .= " AND DT >= " . strtotime($_POST["datetime"]);
+      }
   }
   else if("" != trim($_POST["max_temp"]))
   {
@@ -23,10 +33,22 @@ $test;
     {
       $test .= " AND cityName LIKE '%" . $_POST["city"] . "%'";
     }
+    if("" != trim($_POST["datetime"]))
+    {
+      $test .= " AND DT >= " . strtotime($_POST["datetime"]);
+    }
   }
   else if("" != trim($_POST["city"]))
   {
     $test .= " WHERE cityName LIKE '%" . $_POST["city"] . "%'";
+    if("" != trim($_POST["datetime"]))
+    {
+      $test .= " AND DT >= " . strtotime($_POST["datetime"]);
+    }
+  }
+  else if("" != trim($_POST["datetime"]))
+  {
+          $test .= " WHERE DT >= " . strtotime($_POST["datetime"]);
   }
   $servername = "localhost";
   $username = "root";
@@ -38,7 +60,7 @@ $test;
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
-  $sql = "SELECT Lat,Lng,cityName FROM weather";
+  $sql = "SELECT Lat,Lng,cityName,currTemp FROM weather";
   $allCities = "SELECT cityName FROM weather";
 
   $allCitiesResult = $conn->query($allCities);
@@ -123,15 +145,15 @@ $test;
   	</style>
   </head>
   <body>
-    <form autocomplete="off" action="autocomplete.php" method="post">
-      Minimal temperature: <input type="text" name="min_temp" placeholder="Ex: 25" >
-      Maximal temperature: <input type="text" name="max_temp" placeholder="Ex: 25" >
-      <div class="autocomplete">
-      City: <input id="cityInput" type="text" name="city" placeholder="City">
-      </div>
-      <input type="submit" value = "Submit">
+    <form autocomplete="off" action="http://localhost/wordpress/index.php/map" method="post">
+     	Date:<input type="text" name="datetime" placeholder="<?php echo $_POST["datetime"] ?>">
+	Minimal temperature: <input type="text" name="min_temp" placeholder="<?php echo $_POST["min_temp"] ?>">
+      	Maximal temperature: <input type="text" name="max_temp" placeholder="<?php echo $_POST["max_temp"]?>">
+ 	<div class="autocomplete">
+        City:<input id="cityInput" type="text" name="city" placeholder="<?php echo $_POST["city"] ?>">
+        </div>
+        <input type="submit" value = "Submit">
     </form>
-  </script>
     <script>
     function autoComplete(input,array)
     {
@@ -266,7 +288,7 @@ $test;
   	for(i = 0; i < arr.length; i++)
   	{
   		var pos = new google.maps.LatLng(arr[i]['Lat'],arr[i]['Lng']);
-  		var marker = new google.maps.Marker({position: pos, map: map, title: arr[i]['cityName']});
+  		var marker = new google.maps.Marker({position: pos, map: map, title: arr[i]['cityName']+" "+arr[i]['currTemp']});
   	}
   }
   </script>
