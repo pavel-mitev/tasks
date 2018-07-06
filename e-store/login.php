@@ -1,3 +1,10 @@
+<?php
+session_start();
+if($_SESSION['username']){
+  die(header("location:index.php"));
+}
+ ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,17 +21,32 @@
       <ul class="nav navbar-nav" style="float:right;">
         <li><a href="./index.html">Home</a></li>
         <li class="active"><a href="./login.php">Login</a></li>
-        <li><a href="./register.html">Register</a></li>
+        <li><a href="./register.php">Register</a></li>
         <li><a href="#">Products</a></li>
       </ul>
     </div>
   </nav>
-  <div class="container" id="error">
 
-  </div>
+  <?php
+    if($_GET["formEmpty"] || $_GET["userEmpty"] || $_GET["passwordEmpty"] || $_GET["failedLogin"])
+    {
+      echo "<div class='container'>";
+      echo "<div class='alert alert-danger'>";
+      if($_GET["formEmpty"])
+        echo "<strong>Enter username and password</strong>";
+      if($_GET["userEmpty"])
+        echo "<strong>Enter username</strong>";
+      if($_GET["passwordEmpty"])
+        echo "<strong>Enter password</strong>";
+      if($_GET["failedLogin"])
+        echo "<strong>Invalid username or password</strong>";
+      echo "</div>";
+      echo "</div>";
+    }
+  ?>
   <div class="container">
     <form action="./login_authentication.php" method="post">
-      <div class="form-group">
+      <div class="form-group col-xs-6">
         <label for="usr">Username:</label>
         <input type="text" name="usr" class="form-control" id="usr">
         <label for="pwd">Password:</label>

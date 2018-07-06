@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="./index.html">E-Store</a>
+      </div>
+      <ul class="nav navbar-nav" style="float:right;">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./login.php">Login</a></li>
+        <li class="active"><a href="./register.php">Register</a></li>
+        <li><a href="#">Products</a></li>
+      </ul>
+    </div>
+  </nav>
+
+    <div class="container">
+      <h3>Registration Form</h3>
+    </div>
+
+    <form action="./register_authentication.php" method="post">
+    <div class="container">
+      <div class="form-group">
+        <div class="col-xs-6">
+            <label for="usr">Username</label>
+            <input type="text" class="form-control" id="usr" name="usr">
+        </div>
+      </div>
+    </div>
+
+    <div class=container>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="form-group">
+        <div class="col-xs-3">
+            <label for="firstname">First Name</label>
+            <input type="text" class="form-control" id="firstname" name="firstname">
+        </div>
+        <div class="col-xs-3">
+          <label for="lastname">Last Name</label>
+          <input type="text" class="form-control" id="lastname" name="lastname">
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="form-group col-xs-6">
+        <label for="pwd">Password</label>
+        <input type="password" class="form-control" id="pwd" name="pwd">
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="form-group col-xs-6">
+        <label for="repeatpwd">Re-enter Password</label>
+        <input type="password" class="form-control" id="repeatpwd" name="repeatpwd">
+      </div>
+    </div>
+    <div class="container">
+      <div class="form-group col-xs-2">
+        <input type="submit" class="btn btn-default" value="Register">
+      </div>
+    <div>
+    </form>
+<body>
+</html>
