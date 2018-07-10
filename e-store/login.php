@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 if($_SESSION['username']){
   die(header("location:index.php"));
@@ -27,33 +28,92 @@ if($_SESSION['username']){
     </div>
   </nav>
 
-  <?php
-    if($_GET["formEmpty"] || $_GET["userEmpty"] || $_GET["passwordEmpty"] || $_GET["failedLogin"])
-    {
-      echo "<div class='container'>";
-      echo "<div class='alert alert-danger'>";
-      if($_GET["formEmpty"])
-        echo "<strong>Enter username and password</strong>";
-      if($_GET["userEmpty"])
-        echo "<strong>Enter username</strong>";
-      if($_GET["passwordEmpty"])
-        echo "<strong>Enter password</strong>";
-      if($_GET["failedLogin"])
-        echo "<strong>Invalid username or password</strong>";
-      echo "</div>";
-      echo "</div>";
-    }
-  ?>
-  <div class="container">
-    <form action="./login_authentication.php" method="post">
-      <div class="form-group col-xs-6">
-        <label for="usr">Username:</label>
-        <input type="text" name="usr" class="form-control" id="usr">
-        <label for="pwd">Password:</label>
-        <input type="password" name="pwd" class="form-control" id="pwd">
-        <input type="submit" class="btn btn-default" value="Login">
+    <div class="container">
+      <legend style="font-size:30px;">Login</legend>
+    </div>
+
+    <?php
+      if($_GET["failedLogin"]){
+        echo "<div class='container'><div class='alert alert-danger'><strong>Invalid Login</strong></div></div>";
+      }
+    ?>
+    <form id="loginForm" action="./login_authentication.php" method="post">
+      <div class="container">
+        <div class="container">
+          <div id="userField" class="form-group col-xs-6">
+            <label for="usr">Username</label>
+            <input type="text" name="usr" class="form-control" id="usr" onblur="checkUsername();">
+          </div>
+        </div>
+        <div class="container">
+          <div id="passwordField" class="form-group col-xs-6">
+            <label for="pwd">Password</label>
+            <input type="password" name="pwd" class="form-control" id="pwd" onblur="checkPassword();">
+          </div>
+        </div>
+        <div class="container">
+         <div class="form-group col-xs-6">
+            <input type="button" class="btn btn-default" value="Login" onclick="validateForm();">
+          </div>
+        </div>
       </div>
     </form>
-  </div>
+
+    <script>
+        var usernameInput = document.getElementById("usr");
+        var usernameField = document.getElementById("userField");
+
+        var passwdInput = document.getElementById("pwd");
+        var passwdField = document.getElementById("passwordField");
+
+      function validateForm(){
+        var validForm = true;
+
+        if(passwdInput.value == ""){
+          if(passwdField.childElementCount == 2)
+            appendErrMsg("Enter password",passwdField);
+            passwdInput.style.borderColor = "red";
+          validForm = false;
+        }
+        if(usernameInput.value == ""){
+          if(usernameField.childElementCount == 2)
+            appendErrMsg("Enter username",usernameField);
+            usernameInput.style.borderColor = "red";
+          validForm = false;
+        }
+
+        if(validForm){
+          document.getElementById("loginForm").submit();
+          return true;
+        }else{
+          return false;
+        }
+
+
+      }
+
+      function checkPassword(){
+        if(passwdInput.value != "" && passwdField.childElementCount > 2){
+          passwdField.removeChild(passwdField.children[2]);
+          passwdInput.style.borderColor = "";
+        }
+      }
+
+      function checkUsername(){
+        if(usernameInput.value != "" && usernameField.childElementCount > 2){
+          usernameField.removeChild(usernameField.children[2]);
+          usernameInput.style.borderColor = "";
+        }
+      }
+
+
+      function appendErrMsg(errorMsg,elem){
+        var p = document.createElement("P");
+        p.style.color = "red";
+        var t = document.createTextNode(errorMsg);
+        p.appendChild(t);
+        elem.appendChild(p);
+      }
+    </script>
 </body>
 </html>

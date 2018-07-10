@@ -1,10 +1,6 @@
 <?php
-if(!$_POST['usr'] && !$_POST['pwd']){
-  die(header("location:login.php?formEmpty=true"));
-}else if(!$_POST['usr']){
-  die(header("location:login.php?userEmpty=true"));
-}else if(!$_POST['pwd']){
-  die(header("location:login.php?passwordEmpty=true"));
+if(!$_POST['usr'] || !$_POST['pwd']){
+  die(header("location:login.php?formEmpty=1"));
 }
 
 require "database_connection.php";
@@ -17,7 +13,7 @@ $querystmt = "SELECT Password FROM Customers WHERE CustomerID = '$user'";
 $result = mysqli_query($connect,$querystmt);
 
 if(!$result->num_rows){
-  die(header("location:login.php?failedLogin=true"));
+  die(header("location:login.php?failedLogin=1"));
 }
 
 $row = mysqli_fetch_assoc($result);
@@ -27,7 +23,7 @@ $row = mysqli_fetch_assoc($result);
     $_SESSION['username'] = $user;
     die(header("location:index.php"));
   }else
-    die(header("location:login.php?failedLogin=true"));
+    die(header("location:login.php?failedLogin=1"));
 
 
 mysqli_close($connect);
